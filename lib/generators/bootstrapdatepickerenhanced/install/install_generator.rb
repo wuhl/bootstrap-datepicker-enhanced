@@ -7,6 +7,7 @@ module Bootstrapdatepickerenhanced
       source_root File.expand_path("../templates", __FILE__)
       desc "This generator installs Bootstrap Datepicker Rails Enhanced"
       argument :language_type, :type => :string, :default => 'de', :banner => '*de or other language'
+      class_option :template_engine, desc: 'Template engine to be invoked (erb, haml or slim).'
 
       def add_javascripts
       	insert_into_file "app/assets/javascripts/application.js", :after => "//= require jquery_ujs\n" do
@@ -32,6 +33,7 @@ module Bootstrapdatepickerenhanced
       end
 
 			def adjust_forms_file
+        engine = options[:template_engine]
         if File.exist? "lib/templates/#{engine}/scaffold/_form.html.#{engine}" and File.exist? "app/inputs/date_picker_input.rb"
           gsub_file "lib/templates/#{engine}/scaffold/_form.html.#{engine}",
 					  "<%%= f.<%= attribute.field_type %> :<%= attribute.name %> %>",
