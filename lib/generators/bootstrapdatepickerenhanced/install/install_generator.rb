@@ -37,7 +37,7 @@ module Bootstrapdatepickerenhanced
           gsub_file "lib/templates/#{engine}/scaffold/_form.html.#{engine}",
 					  "<%%= f.<%= attribute.field_type %> :<%= attribute.name %> %>",
 						"<%- if attribute.type.in?([:date]) -%>\n" +
-            "      <%%= f.text_field :<%= attribute.name %>, :input_html => { :size => 10, :maxlength => 10, :language => I18n.locale }, :'data-behaviour' => :datepicker %>\n" +
+            "      <%%= f.text_field :<%= attribute.name %>, :value => l(f.object.<%= attribute.name %>), :input_html => { :size => 10, :maxlength => 10, :language => I18n.locale }, :'data-behaviour' => :datepicker %>\n" +
             "      <%- else -%>\n" +
       			"      <%%= f.<%= attribute.field_type %> :<%= attribute.name %> %>\n" +
             "      <%- end -%>"
