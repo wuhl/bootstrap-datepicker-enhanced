@@ -36,12 +36,24 @@ module Bootstrapdatepickerenhanced
         engine = options[:template_engine]
         if File.exist? "lib/templates/#{engine}/scaffold/_form.html.#{engine}" and File.exist? "app/inputs/date_picker_input.rb"
           gsub_file "lib/templates/#{engine}/scaffold/_form.html.#{engine}",
-					  "<%%= f.<%= attribute.field_type %> :<%= attribute.name %> %>",
-						"<%- if attribute.type.in?([:date]) -%>\n" +
-            "      <%%= f.text_field :<%= attribute.name %>, :value => l(f.object.<%= attribute.name %>), :input_html => { :size => 10, :maxlength => 10, :language => I18n.locale }, :'data-behaviour' => :datepicker %>\n" +
+					  "      <div class=\"col-sm-10\">\n" +
+            "        <%%= f.<%= attribute.field_type %> :<%= attribute.name %>, class: \"form-control\" %>",
+						"      <%- if attribute.type.in?([:date]) -%>\n" +
+            "      <div class=\"col-sm-2\">\n" +
+            "        <%%= f.text_field :<%= attribute.name %>, value: l(f.object.<%= attribute.name %>), :input_html => { size: 10, maxlength: 10, language: I18n.locale }, 'data-behaviour': :datepicker, class: \"form-control datepicker\", placeholder: \"tt.mm.jjjj\" %>\n" +
+            "      </div>\n" +
             "      <%- else -%>\n" +
-      			"      <%%= f.<%= attribute.field_type %> :<%= attribute.name %> %>\n" +
+            "      <div class=\"col-sm-10\">\n" +
+      			"        <%%= f.<%= attribute.field_type %> :<%= attribute.name %>, class: \"form-control\",  placeholder: \"<%= attribute.name %>\" %>\n" +
+            "      </div>\n" +
             "      <%- end -%>"
+
+          gsub_file "lib/templates/#{engine}/scaffold/_form.html.#{engine}",
+            "      <%- end -%>\n" +
+            "      </div>\n" +
+            "    </div>\n",
+            "      <%- end -%>\n" +
+            "    </div>\n"
 				end
 			end
 
