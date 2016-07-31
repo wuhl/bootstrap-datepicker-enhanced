@@ -10,18 +10,19 @@ module Bootstrapdatepickerenhanced
       class_option :template_engine, desc: 'Template engine to be invoked (erb, haml or slim).'
 
       def add_javascripts
-      	insert_into_file "app/assets/javascripts/application.js", :after => "//= require jquery_ujs\n" do
-      		"//= require jquery-ui\n"
-				end
-      	insert_into_file "app/assets/javascripts/application.js", :after => "//= require twitter/bootstrap\n" do
-      		"//= require bootstrap-datepicker\n"
+    #   	insert_into_file "app/assets/javascripts/application.js", :after => "//= require jquery_ujs\n" do
+    #   		"//= require jquery-ui\n"
+				# end
+      	insert_into_file "app/assets/javascripts/application.js", :after => "//= require bootstrap\n" do
+      		"//= require bootstrap-datepicker\n" +
+          "//= require bootstrap-datepicker/core\n" +
+          "//= require bootstrap-datepicker/locales/bootstrap-datepicker.de.js\n"
 				end
       end
 
       def add_stylesheets
-      	insert_into_file "app/assets/stylesheets/application.css", :after => " *= require_self\n" do
-      		" *= require jquery-ui\n" +
-					" *= require bootstrap-datepicker\n"
+      	insert_into_file "app/assets/stylesheets/application.scss", :after => "@import \"bootstrap\";\n" do
+      		"@import \"bootstrap-datepicker\";\n"
 				end
       end
 
