@@ -44,7 +44,7 @@ module Bootstrapdatepickerenhanced
             "      </div>\n" +
             "      <%- else -%>\n" +
             "      <div class=\"col-sm-10\">\n" +
-      			"        <%%= f.<%= attribute.field_type %> :<%= attribute.name %>, class: \"form-control\",  placeholder: \"<%= attribute.name %>\" %>\n" +
+      			"        <%%= f.<%= attribute.field_type %> :<%= attribute.name %>, class: \"form-control\",  placeholder: <%= table_name.classify %>.human_attribute_name(:<%= attribute.name %>) %>\n" +
             "      </div>\n" +
             "      <%- end -%>"
 
@@ -54,9 +54,20 @@ module Bootstrapdatepickerenhanced
             "    </div>\n",
             "      <%- end -%>\n" +
             "    </div>\n"
+
+          gsub_file "lib/templates/#{engine}/scaffold/_form.html.#{engine}",
+            "          elsif not a.password_digest? and not a.reference?",
+            "          elsif a.type.in?([:date])\n" +
+            "            s1 = s1 + \"\\n\" +\n" +
+            "            \"  <div class=\\\"form-group row\\\">\\n\" +\n" +
+            "            \"    <%= f.label :\#\{a.name\}, class: \\\"col-sm-2 form-control-label\\\" %\\>\\n\" +\n" +
+            "            \"    <div class=\\\"col-sm-2\\\">\\n\" + \n" +
+            "            \"      <%= f.text_field :\#\{a.name\}, value: l(f.object.\#\{a.name\}), :input_html => { size: 10, maxlength: 10, language: I18n.locale }, \'data-behaviour\': :datepicker, class: \\\"form-control datepicker\\\", placeholder: \\\"tt.mm.jjjj\\\" %\\>\\n\" +\n" +
+            "            \"    </div>\\n\" +\n" +
+            "            \"  </div>\\n\"\n" +
+            "          elsif not a.password_digest? and not a.reference?"
 				end
 			end
-
     end
   end
 end
